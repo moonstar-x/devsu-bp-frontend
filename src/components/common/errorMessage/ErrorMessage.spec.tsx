@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import { ErrorMessage } from './ErrorMessage';
+import { ErrorMessage } from './ErrorMessage.tsx';
 
 describe('Components: Common: ErrorMessage', () => {
   it('should not render if no error was provided.', () => {

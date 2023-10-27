@@ -1,0 +1,18 @@
+@import '../../../styles/variables';
+
+$logo-width: 240px;
+$logo-height: 20px;
+
+.logo {
+  width: $logo-width;
+  height: $logo-height;
+}
+
+.header {
+  height: 60px;
+  background-color: $white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

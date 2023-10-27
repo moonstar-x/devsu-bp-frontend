@@ -1,10 +1,10 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import { Loading } from './Loading.tsx';
+import { Logo } from './Logo.tsx';
 
-describe('Components: Common: Loading', () => {
+describe('Components: Common: Logo', () => {
   it('should render.', () => {
-    const { container } = render(<Loading />);
+    const { container } = render(<Logo />);
     expect(container).not.toBeEmptyDOMElement();
   });
 });
