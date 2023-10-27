@@ -46,5 +46,12 @@ describe('Services: Api: ProductService', () => {
 
       await expect(fn()).resolves.toStrictEqual(expected);
     });
+
+    it('should return a query request with the data function that throws a RequestError.', async () => {
+      mockedAxiosClient.get.mockRejectedValueOnce({ response: { data: 'Oops!' } });
+      const { fn } = service.searchProducts();
+
+      await expect(fn()).rejects.toMatchObject({ message: 'Oops!' });
+    });
   });
 });

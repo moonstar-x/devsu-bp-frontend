@@ -1,5 +1,6 @@
 import { Client, QueryRequest } from '$services/api/client/Client.ts';
 import { RawProductModel, ProductModel } from '$services/api/models/product.ts';
+import { RequestError } from '$services/api/errors/RequestError.ts';
 
 export class ProductService {
   private readonly client: Client;
@@ -22,8 +23,7 @@ export class ProductService {
         };
       });
     } catch (error) {
-      // TODO: Handle error.
-      return [];
+      throw RequestError.fromRequest(error);
     }
   }
 
