@@ -1,5 +1,5 @@
 export const RouteDefs = {
-  itemSearch: '/',
-  itemCreate: '/create',
-  itemEdit: (id: string) => `/${id}/edit`
+  productSearch: '/',
+  productCreate: '/create',
+  productEdit: (id: string) => `/${id}/edit`
 };
