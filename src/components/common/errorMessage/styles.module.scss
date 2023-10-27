@@ -1,0 +1,25 @@
+@import '../../../styles/variables';
+
+.message {
+  background-color: $danger100;
+  padding: 1.5rem;
+  margin: 1rem;
+  border-radius: 10px;
+}
+
+.title {
+  margin: 0;
+  color: $danger700;
+}
+
+.description {
+  color: $danger400;
+
+  strong {
+    color: $danger900;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
