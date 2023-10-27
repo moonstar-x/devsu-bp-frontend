@@ -4,5 +4,8 @@
   ],
   "ignorePatterns": [
     "src/vite-env.d.ts"
-  ]
+  ],
+  "rules": {
+    "camelcase": "off"
+  }
 }
