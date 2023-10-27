@@ -1,10 +1,11 @@
 import React from 'react';
+import { PageWrapper } from '$components/common/pageWrapper';
 
 const ProductEditPage = () => {
   return (
-    <div>
+    <PageWrapper title="Edit Product">
       ITEM EDIT
-    </div>
+    </PageWrapper>
   );
 };
 

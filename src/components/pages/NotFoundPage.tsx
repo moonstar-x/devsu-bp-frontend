@@ -1,10 +1,11 @@
 import React from 'react';
+import { PageWrapper } from '$components/common/pageWrapper';
 
 const NotFoundPage = () => {
   return (
-    <div>
+    <PageWrapper title="Page Not Found!">
       NOT FOUND
-    </div>
+    </PageWrapper>
   );
 };
 
