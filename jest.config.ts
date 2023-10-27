@@ -10,6 +10,7 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   testEnvironment: 'jsdom',
   moduleNameMapper: {
-    '^.+\\.(css|less|scss)$': 'identity-obj-proxy'
+    '^.+\\.(css|less|scss)$': 'identity-obj-proxy',
+    '^\\$(.*)$': '<rootDir>/src/$1'
   }
 };
