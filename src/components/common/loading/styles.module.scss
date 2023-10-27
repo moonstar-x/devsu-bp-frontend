@@ -1,0 +1,39 @@
+@import '../../../styles/variables';
+
+.loaderWrapper {
+  display: inline-flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  align-items: center;
+}
+
+.fullScreenLoader {
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+}
+
+.loader {
+  display: inline-block;
+
+  width: 48px;
+  height: 48px;
+
+  border: 5px solid $yellow700;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
