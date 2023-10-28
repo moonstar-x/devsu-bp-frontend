@@ -122,3 +122,13 @@ $error300: #f27e65;
 $error500: #d50707;
 $error600: #b70514;
 $error700: #99031d;
+
+/* Utility */
+$breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px
+);
