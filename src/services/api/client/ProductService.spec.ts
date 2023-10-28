@@ -1,10 +1,11 @@
 import { ProductService } from './ProductService.ts';
 import { Client } from './Client.ts';
-import { ProductCreateFormBody } from '$services/api/models/product.ts';
+import { ProductCreateFormBody, ProductEditFormBody } from '$services/api/models/product.ts';
 
 const mockedAxiosClient = {
   get: jest.fn(),
-  post: jest.fn()
+  post: jest.fn(),
+  put: jest.fn()
 };
 const client = new Client('', '');
 Object.defineProperty(client, 'instance', {
@@ -99,6 +100,51 @@ describe('Services: Api: ProductService', () => {
       const { fn } = service.createProduct();
 
       await expect(fn(postBody)).rejects.toMatchObject({ message: 'Oops!' });
+    });
+  });
+
+  describe('updateProduct()', () => {
+    const exampleResponse = { a: 1, date_release: '1993-07-28T19:39:07.000Z', date_revision: '1993-07-28T19:39:07.000Z' };
+    const putBody = {} as ProductEditFormBody;
+
+    beforeAll(() => {
+      mockedAxiosClient.put.mockResolvedValue({ data: exampleResponse, status: 200 });
+    });
+
+    beforeEach(() => {
+      mockedAxiosClient.put.mockClear();
+    });
+
+    afterAll(() => {
+      mockedAxiosClient.put.mockRestore();
+    });
+
+    it('should return a mutation request with the correct key.', () => {
+      const { key } = service.updateProduct();
+      const expected = ['products'];
+
+      expect(key).toStrictEqual(expected);
+    });
+
+    it('should return a mutation request with the data function.', async () => {
+      const { fn } = service.updateProduct();
+      const expected = { a: 1, dateRelease: new Date('1993-07-28T19:39:07.000Z'), dateRevision: new Date('1993-07-28T19:39:07.000Z') };
+
+      await expect(fn(putBody)).resolves.toStrictEqual(expected);
+    });
+
+    it('should return a mutation request with the data function that throws a RequestError.', async () => {
+      mockedAxiosClient.put.mockRejectedValueOnce({ response: { data: 'Oops!' } });
+      const { fn } = service.updateProduct();
+
+      await expect(fn(putBody)).rejects.toMatchObject({ message: 'Oops!' });
+    });
+
+    it('should return a mutation request with the data function that throws a RequestError on error response.', async () => {
+      mockedAxiosClient.put.mockResolvedValueOnce({ data: { description: 'Oops!' }, status: 206 });
+      const { fn } = service.updateProduct();
+
+      await expect(fn(putBody)).rejects.toMatchObject({ message: 'Oops!' });
     });
   });
 });

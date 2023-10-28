@@ -26,3 +26,4 @@ export const rawProductToModel = (rawProduct: RawProductModel): ProductModel => 
 };
 
 export type ProductCreateFormBody = RawProductModel; // All fields match, though these types should not be used interchangeably.
+export type ProductEditFormBody = RawProductModel; // All fields match, though these types should not be used interchangeably.
