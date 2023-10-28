@@ -1,8 +1,10 @@
 import { ProductService } from './ProductService.ts';
 import { Client } from './Client.ts';
+import { ProductCreateFormBody } from '$services/api/models/product.ts';
 
 const mockedAxiosClient = {
-  get: jest.fn()
+  get: jest.fn(),
+  post: jest.fn()
 };
 const client = new Client('', '');
 Object.defineProperty(client, 'instance', {
@@ -13,13 +15,13 @@ describe('Services: Api: ProductService', () => {
   const service = new ProductService(client);
 
   describe('searchProducts()', () => {
-    const exampleSearchResponse = [
+    const exampleResponse = [
       { a: 1, date_release: '1993-07-28T19:39:07.000Z', date_revision: '1993-07-28T19:39:07.000Z' },
       { a: 1, date_release: '1993-07-28T19:39:07.000Z', date_revision: '1993-07-28T19:39:07.000Z' }
     ];
 
     beforeAll(() => {
-      mockedAxiosClient.get.mockResolvedValue({ data: exampleSearchResponse });
+      mockedAxiosClient.get.mockResolvedValue({ data: exampleResponse });
     });
 
     beforeEach(() => {
@@ -52,6 +54,51 @@ describe('Services: Api: ProductService', () => {
       const { fn } = service.searchProducts();
 
       await expect(fn()).rejects.toMatchObject({ message: 'Oops!' });
+    });
+  });
+
+  describe('createProduct()', () => {
+    const exampleResponse = { a: 1, date_release: '1993-07-28T19:39:07.000Z', date_revision: '1993-07-28T19:39:07.000Z' };
+    const postBody = {} as ProductCreateFormBody;
+
+    beforeAll(() => {
+      mockedAxiosClient.post.mockResolvedValue({ data: exampleResponse, status: 200 });
+    });
+
+    beforeEach(() => {
+      mockedAxiosClient.post.mockClear();
+    });
+
+    afterAll(() => {
+      mockedAxiosClient.post.mockRestore();
+    });
+
+    it('should return a mutation request with the correct key.', () => {
+      const { key } = service.createProduct();
+      const expected = ['products'];
+
+      expect(key).toStrictEqual(expected);
+    });
+
+    it('should return a mutation request with the data function.', async () => {
+      const { fn } = service.createProduct();
+      const expected = { a: 1, dateRelease: new Date('1993-07-28T19:39:07.000Z'), dateRevision: new Date('1993-07-28T19:39:07.000Z') };
+
+      await expect(fn(postBody)).resolves.toStrictEqual(expected);
+    });
+
+    it('should return a mutation request with the data function that throws a RequestError.', async () => {
+      mockedAxiosClient.post.mockRejectedValueOnce({ response: { data: 'Oops!' } });
+      const { fn } = service.createProduct();
+
+      await expect(fn(postBody)).rejects.toMatchObject({ message: 'Oops!' });
+    });
+
+    it('should return a mutation request with the data function that throws a RequestError on error response.', async () => {
+      mockedAxiosClient.post.mockResolvedValueOnce({ data: { description: 'Oops!' }, status: 206 });
+      const { fn } = service.createProduct();
+
+      await expect(fn(postBody)).rejects.toMatchObject({ message: 'Oops!' });
     });
   });
 });
