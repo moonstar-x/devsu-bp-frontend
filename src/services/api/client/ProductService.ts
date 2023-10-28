@@ -105,4 +105,25 @@ export class ProductService {
       }
     };
   }
+
+  private async doCheckProduct(id: string): Promise<boolean> {
+    try {
+      const response = await this.client.instance.get<string>('/products/verification', {
+        params: {
+          id
+        }
+      });
+
+      return response.data === 'true';
+    } catch (error) {
+      throw RequestError.fromRequest(error);
+    }
+  }
+
+  public checkProduct(id: string): QueryRequest<boolean> {
+    return {
+      key: ['products', id, 'check'],
+      fn: () => this.doCheckProduct(id)
+    };
+  }
 }

@@ -178,9 +178,54 @@ describe('Services: Api: ProductService', () => {
       await expect(fn()).resolves.toBeUndefined();
     });
 
-    it('should return a query request with the data function that throws a RequestError.', async () => {
+    it('should return a mutation request with the data function that throws a RequestError.', async () => {
       mockedAxiosClient.delete.mockRejectedValueOnce({ response: { data: 'Oops!' } });
       const { fn } = service.deleteProduct(productId);
+
+      await expect(fn()).rejects.toMatchObject({ message: 'Oops!' });
+    });
+  });
+
+  describe('checkProduct()', () => {
+    const exampleResponse = 'true';
+    const productId = 'id';
+
+    beforeAll(() => {
+      mockedAxiosClient.get.mockResolvedValue({ data: exampleResponse });
+    });
+
+    beforeEach(() => {
+      mockedAxiosClient.get.mockClear();
+    });
+
+    afterAll(() => {
+      mockedAxiosClient.get.mockRestore();
+    });
+
+    it('should return a query request with the correct key.', () => {
+      const { key } = service.checkProduct(productId);
+      const expected = ['products', productId, 'check'];
+
+      expect(key).toStrictEqual(expected);
+    });
+
+    it('should return a query request with the data function that returns true on exists.', async () => {
+      mockedAxiosClient.get.mockResolvedValueOnce({ data: 'true' });
+      const { fn } = service.checkProduct(productId);
+
+      await expect(fn()).resolves.toBe(true);
+    });
+
+    it('should return a query request with the data function that returns true on exists.', async () => {
+      mockedAxiosClient.get.mockResolvedValueOnce({ data: 'false' });
+      const { fn } = service.checkProduct(productId);
+
+      await expect(fn()).resolves.toBe(false);
+    });
+
+    it('should return a query request with the data function that throws a RequestError.', async () => {
+      mockedAxiosClient.get.mockRejectedValueOnce({ response: { data: 'Oops!' } });
+      const { fn } = service.checkProduct(productId);
 
       await expect(fn()).rejects.toMatchObject({ message: 'Oops!' });
     });
