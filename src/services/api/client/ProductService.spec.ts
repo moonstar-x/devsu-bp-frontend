@@ -1,6 +1,6 @@
 import { ProductService } from './ProductService.ts';
 import { Client } from './Client.ts';
-import { ProductCreateFormBody, ProductEditFormBody } from '$services/api/models/product.ts';
+import { ProductMutationFormBody } from '$services/api/models/product.ts';
 
 const mockedAxiosClient = {
   get: jest.fn(),
@@ -61,7 +61,7 @@ describe('Services: Api: ProductService', () => {
 
   describe('createProduct()', () => {
     const exampleResponse = { a: 1, date_release: '1993-07-28T19:39:07.000Z', date_revision: '1993-07-28T19:39:07.000Z' };
-    const postBody = {} as ProductCreateFormBody;
+    const postBody = {} as ProductMutationFormBody;
 
     beforeAll(() => {
       mockedAxiosClient.post.mockResolvedValue({ data: exampleResponse, status: 200 });
@@ -106,7 +106,7 @@ describe('Services: Api: ProductService', () => {
 
   describe('updateProduct()', () => {
     const exampleResponse = { a: 1, date_release: '1993-07-28T19:39:07.000Z', date_revision: '1993-07-28T19:39:07.000Z' };
-    const putBody = {} as ProductEditFormBody;
+    const putBody = {} as ProductMutationFormBody;
 
     beforeAll(() => {
       mockedAxiosClient.put.mockResolvedValue({ data: exampleResponse, status: 200 });

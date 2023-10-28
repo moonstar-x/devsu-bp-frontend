@@ -2,8 +2,7 @@ import { Client, QueryRequest, MutationRequest } from '$services/api/client/Clie
 import {
   RawProductModel,
   ProductModel,
-  ProductCreateFormBody,
-  ProductEditFormBody,
+  ProductMutationFormBody,
   rawProductToModel
 } from '$services/api/models/product.ts';
 import { RequestError } from '$services/api/errors/RequestError.ts';
@@ -36,7 +35,7 @@ export class ProductService {
     };
   }
 
-  private async doCreateProduct(data: ProductCreateFormBody): Promise<ProductModel> {
+  private async doCreateProduct(data: ProductMutationFormBody): Promise<ProductModel> {
     try {
       const response = await this.client.instance.post<RawProductModel | ErrorResponse>('/products', data);
 
@@ -50,17 +49,17 @@ export class ProductService {
     }
   }
 
-  public createProduct(): MutationRequest<ProductCreateFormBody, ProductModel> {
+  public createProduct(): MutationRequest<ProductMutationFormBody, ProductModel> {
     return {
       key: ['products'],
-      fn: (data: ProductCreateFormBody) => this.doCreateProduct(data),
+      fn: (data: ProductMutationFormBody) => this.doCreateProduct(data),
       onSuccess: async (queryClient) => {
         await queryClient.invalidateQueries({ queryKey: ['products'] });
       }
     };
   }
 
-  private async doUpdateProduct(data: ProductEditFormBody): Promise<ProductModel> {
+  private async doUpdateProduct(data: ProductMutationFormBody): Promise<ProductModel> {
     try {
       const response = await this.client.instance.put<RawProductModel | ErrorResponse>('/products', data);
 
@@ -74,10 +73,10 @@ export class ProductService {
     }
   }
 
-  public updateProduct(): MutationRequest<ProductEditFormBody, ProductModel> {
+  public updateProduct(): MutationRequest<ProductMutationFormBody, ProductModel> {
     return {
       key: ['products'],
-      fn: (data: ProductEditFormBody) => this.doUpdateProduct(data),
+      fn: (data: ProductMutationFormBody) => this.doUpdateProduct(data),
       onSuccess: async (queryClient) => {
         await queryClient.invalidateQueries({ queryKey: ['products'] });
       }
