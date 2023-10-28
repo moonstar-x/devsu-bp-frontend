@@ -1,0 +1,21 @@
+@import '../../../../styles/variables';
+
+.field {
+  width: 100%;
+}
+
+.input {
+  margin: 8px 0;
+  width: 100%;
+  padding: 12px;
+  border: 1px solid $black;
+  border-radius: 5px;
+}
+
+.inputError {
+  border-color: $danger700;
+}
+
+.feedback {
+  color: $danger700;
+}

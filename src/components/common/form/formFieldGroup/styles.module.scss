@@ -1,6 +1,11 @@
 .group {
   display: flex;
   flex-direction: row;
-  gap: 1rem;
+  gap: 2rem;
   margin-bottom: 1rem;
+  width: 100%;
+
+  * {
+    flex: 1;
+  }
 }
