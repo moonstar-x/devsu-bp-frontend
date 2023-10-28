@@ -83,4 +83,26 @@ export class ProductService {
       }
     };
   }
+
+  private async doDeleteProduct(id: string): Promise<void> {
+    try {
+      await this.client.instance.delete<string>('/products', {
+        params: {
+          id
+        }
+      });
+    } catch (error) {
+      throw RequestError.fromRequest(error);
+    }
+  }
+
+  public deleteProduct(id: string): MutationRequest<void, void> {
+    return {
+      key: ['products'],
+      fn: () => this.doDeleteProduct(id),
+      onSuccess: async (queryClient) => {
+        await queryClient.invalidateQueries({ queryKey: ['products'] });
+      }
+    };
+  }
 }

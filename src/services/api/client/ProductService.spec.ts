@@ -5,7 +5,8 @@ import { ProductCreateFormBody, ProductEditFormBody } from '$services/api/models
 const mockedAxiosClient = {
   get: jest.fn(),
   post: jest.fn(),
-  put: jest.fn()
+  put: jest.fn(),
+  delete: jest.fn()
 };
 const client = new Client('', '');
 Object.defineProperty(client, 'instance', {
@@ -145,6 +146,43 @@ describe('Services: Api: ProductService', () => {
       const { fn } = service.updateProduct();
 
       await expect(fn(putBody)).rejects.toMatchObject({ message: 'Oops!' });
+    });
+  });
+
+  describe('deleteProduct()', () => {
+    const exampleResponse = 'Product successfully removed';
+    const productId = 'id';
+
+    beforeAll(() => {
+      mockedAxiosClient.delete.mockResolvedValue({ data: exampleResponse });
+    });
+
+    beforeEach(() => {
+      mockedAxiosClient.delete.mockClear();
+    });
+
+    afterAll(() => {
+      mockedAxiosClient.delete.mockRestore();
+    });
+
+    it('should return a mutation request with the correct key.', () => {
+      const { key } = service.deleteProduct(productId);
+      const expected = ['products'];
+
+      expect(key).toStrictEqual(expected);
+    });
+
+    it('should return a mutation request with the data function.', async () => {
+      const { fn } = service.deleteProduct(productId);
+
+      await expect(fn()).resolves.toBeUndefined();
+    });
+
+    it('should return a query request with the data function that throws a RequestError.', async () => {
+      mockedAxiosClient.delete.mockRejectedValueOnce({ response: { data: 'Oops!' } });
+      const { fn } = service.deleteProduct(productId);
+
+      await expect(fn()).rejects.toMatchObject({ message: 'Oops!' });
     });
   });
 });
