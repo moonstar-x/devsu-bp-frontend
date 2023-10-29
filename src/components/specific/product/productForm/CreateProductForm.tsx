@@ -12,8 +12,8 @@ export const CreateProductForm: React.FC<Props> = ({ onComplete }) => {
   const createMutation = useMutation(client.products.createProduct());
 
   const handleSubmit = async (data: ProductMutationFormBody) => {
-    // await createMutation.mutateAsync(data);
-    console.log(createMutation, data);
+    console.log('Will create new product with the following data:', data);
+    await createMutation.mutateAsync(data);
     onComplete?.();
   };
 
