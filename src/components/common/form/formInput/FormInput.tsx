@@ -17,6 +17,7 @@ export const FormInput = React.forwardRef<HTMLInputElement, Props>(({ label, fee
           </label>
         )
       }
+
       <input className={clsx(styles.input, { [styles.inputError]: !!feedback }, className)} ref={ref} {...props} />
 
       {
