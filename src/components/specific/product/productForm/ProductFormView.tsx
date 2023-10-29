@@ -24,13 +24,11 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
   useEffect(() => {
     if (insertedDateRelease) {
       const insertedDateReleaseFormatted = insertedDateRelease instanceof Date ? dayjs(insertedDateRelease).format('YYYY-MM-DD') : insertedDateRelease;
-      console.log('inserted', insertedDateReleaseFormatted);
 
       const insertedDateParts = insertedDateReleaseFormatted.split('-');
       insertedDateParts[0] = (parseInt(insertedDateParts[0], 10) + 1).toString();
 
       const computedDateRevision = insertedDateParts.join('-');
-      console.log('computed', computedDateRevision);
 
       setValue('date_revision', computedDateRevision);
       trigger('date_revision');
