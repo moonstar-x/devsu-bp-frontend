@@ -2,7 +2,8 @@ import Joi from 'joi';
 import { ProductMutationFormBody } from '$services/api/models/product.ts';
 
 const NOW = new Date();
-const ONE_YEAR_FROM_NOW = new Date(NOW.getFullYear() + 1, NOW.getMonth(), NOW.getDate());
+NOW.setHours(0, 0, 0); // We only care about year, month and day.
+const ONE_YEAR_FROM_NOW = new Date(NOW.getFullYear() + 1, NOW.getMonth(), NOW.getDate() + 1);
 
 export const ProductSchema = Joi.object<ProductMutationFormBody>({
   id: Joi.string().min(3).max(10).required(),

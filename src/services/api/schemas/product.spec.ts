@@ -91,7 +91,7 @@ describe('Schemas: Product', () => {
 
     it('should validate false against bad date_release.', () => {
       const now = new Date();
-      const date = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate());
+      const date = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate() + 1);
 
       const values = [
         { ...validProduct, date_release: '' },
