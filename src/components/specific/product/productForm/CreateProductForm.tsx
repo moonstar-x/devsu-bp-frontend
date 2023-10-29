@@ -2,7 +2,6 @@ import React from 'react';
 import { useApiClient, useMutation } from '$components/hooks/api.tsx';
 import { ProductFormLogic } from './ProductFormLogic.tsx';
 import { ProductMutationFormBody } from '$services/api/models/product.ts';
-import { CreateProductSchema } from './schemas.ts';
 
 interface Props {
   onComplete?: () => void
@@ -19,6 +18,6 @@ export const CreateProductForm: React.FC<Props> = ({ onComplete }) => {
   };
 
   return (
-    <ProductFormLogic onSubmit={handleSubmit} schema={CreateProductSchema} />
+    <ProductFormLogic onSubmit={handleSubmit} />
   );
 };

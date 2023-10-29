@@ -1,20 +1,19 @@
 import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
-import Joi from 'joi';
 import { ProductMutationFormBody } from '$services/api/models/product.ts';
+import { ProductSchema } from '$services/api/schemas/product.ts';
 import { ProductFormView } from './ProductFormView.tsx';
 
 interface Props {
   onSubmit: SubmitHandler<ProductMutationFormBody>
-  schema: Joi.Schema<ProductMutationFormBody>
   initialData?: ProductMutationFormBody
 }
 
-export const ProductFormLogic: React.FC<Props> = ({ onSubmit, schema, initialData }) => {
+export const ProductFormLogic: React.FC<Props> = ({ onSubmit, initialData }) => {
   const form = useForm({
     mode: 'onSubmit',
-    resolver: joiResolver(schema),
+    resolver: joiResolver(ProductSchema),
     defaultValues: initialData
   });
   const [error, setError] = useState<Error | null>(null);
