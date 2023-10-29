@@ -48,6 +48,7 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
 
       <FormFieldGroup>
         <FormInput
+          fluid
           type="text"
           label="ID"
           feedback={errors.id?.message}
@@ -55,6 +56,7 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
         />
 
         <FormInput
+          fluid
           type="text"
           label="Name"
           feedback={errors.name?.message}
@@ -64,6 +66,7 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
 
       <FormFieldGroup>
         <FormInput
+          fluid
           type="text"
           label="Description"
           feedback={errors.description?.message}
@@ -71,6 +74,7 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
         />
 
         <FormInput
+          fluid
           type="text"
           label="Logo"
           feedback={errors.logo?.message}
@@ -80,6 +84,7 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
 
       <FormFieldGroup>
         <FormInput
+          fluid
           type="date"
           label="Release Date"
           min={minReleaseDate}
@@ -88,6 +93,7 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
         />
 
         <FormInput
+          fluid
           type="date"
           label="Revision Date"
           disabled
