@@ -1,0 +1,25 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.head {
+
+  tr {
+    background-color: $darkGrayishBlue100;
+    border-bottom: 2px solid $darkGrayishBlue300;
+
+    th {
+      padding: 1rem 0;
+      @include font-family(Prelo W01 Semi Bold);
+      text-align: start;
+
+      &:first-child {
+        text-align: center;
+        padding: 1rem;
+      }
+
+      &:last-child {
+        padding: 1rem;
+      }
+    }
+  }
+}
