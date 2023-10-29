@@ -1,4 +1,5 @@
 @import '../../../styles/variables';
+@import '../../../styles/mixins';
 
 .primary {
   background-color: $yellow500;
@@ -28,7 +29,7 @@
   text-decoration: none;
   cursor: pointer;
 
-  font-family: Prelo W01 Semi Bold, -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  @include font-family(Prelo W01 Semi Bold);
   font-weight: 400;
   font-size: 14px;
   line-height: 1;
