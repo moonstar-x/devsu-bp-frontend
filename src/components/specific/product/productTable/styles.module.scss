@@ -1,0 +1,11 @@
+@import '../../../../styles/variables';
+
+.menuIconWrapper {
+  cursor: pointer;
+  text-align: center;
+}
+
+.menuIcon {
+  height: 30px;
+  fill: $darkGrayishBlue900;
+}
