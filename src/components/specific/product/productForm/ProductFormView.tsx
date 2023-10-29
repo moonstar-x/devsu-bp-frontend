@@ -16,17 +16,24 @@ interface Props {
 }
 
 export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
-  const { handleSubmit, register, reset, setValue, formState: { errors, isSubmitting } } = form;
-
+  const { handleSubmit, register, reset, setValue, trigger, formState: { errors, isSubmitting } } = form;
   const { date_release: insertedDateRelease } = useWatch(form);
+
+  const minReleaseDate = dayjs(new Date()).format('YYYY-MM-DD');
 
   useEffect(() => {
     if (insertedDateRelease) {
-      const insertedDateReleaseAsDate = insertedDateRelease instanceof Date ? insertedDateRelease : new Date(insertedDateRelease);
-      const computedDateRevisionAsDate = new Date(insertedDateReleaseAsDate.getFullYear() + 1, insertedDateReleaseAsDate.getMonth(), insertedDateReleaseAsDate.getDate() + 1);
-      const computedDateRevision = dayjs(computedDateRevisionAsDate).format('YYYY-MM-DD');
+      const insertedDateReleaseFormatted = insertedDateRelease instanceof Date ? dayjs(insertedDateRelease).format('YYYY-MM-DD') : insertedDateRelease;
+      console.log('inserted', insertedDateReleaseFormatted);
+
+      const insertedDateParts = insertedDateReleaseFormatted.split('-');
+      insertedDateParts[0] = (parseInt(insertedDateParts[0], 10) + 1).toString();
+
+      const computedDateRevision = insertedDateParts.join('-');
+      console.log('computed', computedDateRevision);
 
       setValue('date_revision', computedDateRevision);
+      trigger('date_revision');
     }
   }, [insertedDateRelease]);
 
@@ -75,6 +82,7 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
         <FormInput
           type="date"
           label="Release Date"
+          min={minReleaseDate}
           feedback={errors.date_release?.message}
           {...register('date_release')}
         />
