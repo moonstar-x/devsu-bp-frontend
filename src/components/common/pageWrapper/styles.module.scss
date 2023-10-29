@@ -4,6 +4,7 @@
 .content {
   max-width: 1320px;
   margin: 0 auto;
+  padding-bottom: 4rem;
 
   @media (max-width: map.get($breakpoints, 'xxl')) {
     max-width: 1140px;
