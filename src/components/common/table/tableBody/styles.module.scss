@@ -1,0 +1,18 @@
+@import '../../../../styles/variables';
+@import '../../../../styles/mixins';
+
+.body {
+
+  tr {
+    background-color: $white;
+    border-bottom: 1px solid $darkGrayishBlue300;
+
+    td {
+      padding: 5px 0;
+
+      * {
+        vertical-align: middle;
+      }
+    }
+  }
+}
