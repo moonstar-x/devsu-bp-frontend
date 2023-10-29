@@ -1,0 +1,40 @@
+@import '../../../styles/variables';
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+}
+
+.button {
+  background-color: $yellow500;
+  color: $black;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  border: none;
+
+  &:not(:disabled) {
+    cursor: pointer;
+
+    &:hover, &:focus {
+      background-color: $yellow700;
+    }
+  }
+
+  &:disabled {
+    color: $darkGrayishBlue900;
+    background-color: $darkGrayishBlue400;
+  }
+}
+
+.input {
+  height: 100%;
+  width: 2rem;
+  margin: 0;
+  border: 1px solid $darkGrayishBlue900;
+}
+
+.icon {
+  height: 1em;
+  fill: $black;
+}
