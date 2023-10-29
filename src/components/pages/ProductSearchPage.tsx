@@ -4,6 +4,7 @@ import { AsyncWrapper } from '$components/common/asyncWrapper';
 import { SearchBar } from '$components/specific/search/searchBar';
 import { Box } from '$components/common/box';
 import { ProductTable } from '$components/specific/product/productTable';
+import { PaginationBar } from '$components/specific/search/paginationBar';
 import { useApiClient, useQuery } from '$components/hooks/api.tsx';
 
 const ProductSearchPage = () => {
@@ -30,7 +31,9 @@ const ProductSearchPage = () => {
         <SearchBar onSearch={handleSearchChange} />
 
         <Box>
-          <ProductTable products={filteredProducts ?? []} />
+          <ProductTable products={filteredProducts} />
+
+          <PaginationBar resultCount={filteredProducts.length} />
         </Box>
       </AsyncWrapper>
     </PageWrapper>
