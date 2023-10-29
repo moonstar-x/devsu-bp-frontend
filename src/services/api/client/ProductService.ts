@@ -7,11 +7,6 @@ import {
 } from '$services/api/models/product.ts';
 import { RequestError } from '$services/api/errors/RequestError.ts';
 
-type ErrorResponse = {
-  name: string
-  description: string
-};
-
 export class ProductService {
   private readonly client: Client;
 
@@ -37,10 +32,13 @@ export class ProductService {
 
   private async doCreateProduct(data: ProductMutationFormBody): Promise<ProductModel> {
     try {
-      const response = await this.client.instance.post<RawProductModel | ErrorResponse>('/products', data);
+      const response = await this.client.instance.post<RawProductModel>('/products', data);
 
       if (response.status === 206) {
-        throw new Error(response.data.description);
+        const message = Object.entries(response.data).reduce((text, [k, v]) => {
+          return text.concat(`${k}: ${v}\n`);
+        }, '').trimEnd();
+        throw new Error(message);
       }
 
       return rawProductToModel(response.data as RawProductModel);
@@ -61,10 +59,13 @@ export class ProductService {
 
   private async doUpdateProduct(data: ProductMutationFormBody): Promise<ProductModel> {
     try {
-      const response = await this.client.instance.put<RawProductModel | ErrorResponse>('/products', data);
+      const response = await this.client.instance.put<RawProductModel>('/products', data);
 
       if (response.status === 206) {
-        throw new Error(response.data.description);
+        const message = Object.entries(response.data).reduce((text, [k, v]) => {
+          return text.concat(`${k}: ${v}\n`);
+        }, '').trimEnd();
+        throw new Error(message);
       }
 
       return rawProductToModel(response.data as RawProductModel);
@@ -105,7 +106,8 @@ export class ProductService {
     };
   }
 
-  private async doCheckProduct(id: string): Promise<boolean> {
+  // This service does not need caching.
+  public async checkProduct(id: string): Promise<boolean> {
     try {
       const response = await this.client.instance.get<string>('/products/verification', {
         params: {
@@ -117,12 +119,5 @@ export class ProductService {
     } catch (error) {
       throw RequestError.fromRequest(error);
     }
-  }
-
-  public checkProduct(id: string): QueryRequest<boolean> {
-    return {
-      key: ['products', id, 'check'],
-      fn: () => this.doCheckProduct(id)
-    };
   }
 }

@@ -100,7 +100,7 @@ describe('Services: Api: ProductService', () => {
       mockedAxiosClient.post.mockResolvedValueOnce({ data: { description: 'Oops!' }, status: 206 });
       const { fn } = service.createProduct();
 
-      await expect(fn(postBody)).rejects.toMatchObject({ message: 'Oops!' });
+      await expect(fn(postBody)).rejects.toMatchObject({ message: 'description: Oops!' });
     });
   });
 
@@ -142,10 +142,10 @@ describe('Services: Api: ProductService', () => {
     });
 
     it('should return a mutation request with the data function that throws a RequestError on error response.', async () => {
-      mockedAxiosClient.put.mockResolvedValueOnce({ data: { description: 'Oops!' }, status: 206 });
+      mockedAxiosClient.put.mockResolvedValueOnce({ data: { name: 'Oops!' }, status: 206 });
       const { fn } = service.updateProduct();
 
-      await expect(fn(putBody)).rejects.toMatchObject({ message: 'Oops!' });
+      await expect(fn(putBody)).rejects.toMatchObject({ message: 'name: Oops!' });
     });
   });
 
@@ -202,32 +202,23 @@ describe('Services: Api: ProductService', () => {
       mockedAxiosClient.get.mockRestore();
     });
 
-    it('should return a query request with the correct key.', () => {
-      const { key } = service.checkProduct(productId);
-      const expected = ['products', productId, 'check'];
 
-      expect(key).toStrictEqual(expected);
-    });
-
-    it('should return a query request with the data function that returns true on exists.', async () => {
+    it('should resolve true on exists.', async () => {
       mockedAxiosClient.get.mockResolvedValueOnce({ data: 'true' });
-      const { fn } = service.checkProduct(productId);
 
-      await expect(fn()).resolves.toBe(true);
+      await expect(service.checkProduct(productId)).resolves.toBe(true);
     });
 
-    it('should return a query request with the data function that returns true on exists.', async () => {
+    it('should resolve false on not exists.', async () => {
       mockedAxiosClient.get.mockResolvedValueOnce({ data: 'false' });
-      const { fn } = service.checkProduct(productId);
 
-      await expect(fn()).resolves.toBe(false);
+      await expect(service.checkProduct(productId)).resolves.toBe(false);
     });
 
-    it('should return a query request with the data function that throws a RequestError.', async () => {
+    it('should reject a RequestError on failure.', async () => {
       mockedAxiosClient.get.mockRejectedValueOnce({ response: { data: 'Oops!' } });
-      const { fn } = service.checkProduct(productId);
 
-      await expect(fn()).rejects.toMatchObject({ message: 'Oops!' });
+      await expect(service.checkProduct(productId)).rejects.toMatchObject({ message: 'Oops!' });
     });
   });
 });

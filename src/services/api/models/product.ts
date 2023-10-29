@@ -25,4 +25,7 @@ export const rawProductToModel = (rawProduct: RawProductModel): ProductModel => 
   };
 };
 
-export type ProductMutationFormBody = RawProductModel; // All fields match, though these types should not be used interchangeably.
+export type ProductMutationFormBody = BaseProductModel & {
+  date_release: Date | string
+  date_revision: Date | string
+};
