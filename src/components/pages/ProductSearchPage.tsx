@@ -9,6 +9,9 @@ import { useApiClient, useQuery } from '$components/hooks/api.tsx';
 
 const ProductSearchPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [page, setPage] = useState<number>(1);
+  const [paginationCount, setPaginationCount] = useState<number>(5);
+
   const client = useApiClient();
   const { data: products, isLoading, error } = useQuery(client.products.searchProducts());
 
@@ -21,8 +24,18 @@ const ProductSearchPage = () => {
     return product.name.toLowerCase().includes(searchTerm.toLowerCase()) || product.description.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+  // Given that the API returns all objects, we're doing a local pagination.
+  const pageStartIndex = (page - 1) * paginationCount;
+  const pageEndIndex = pageStartIndex + paginationCount;
+  const paginatedProducts = filteredProducts.slice(pageStartIndex, pageEndIndex);
+
   const handleSearchChange = (value: string) => {
     setSearchTerm(value);
+  };
+
+  const handlePaginationChange = (page: number, paginationCount: number) => {
+    setPage(page);
+    setPaginationCount(paginationCount);
   };
 
   return (
@@ -31,9 +44,9 @@ const ProductSearchPage = () => {
         <SearchBar onSearch={handleSearchChange} />
 
         <Box>
-          <ProductTable products={filteredProducts} />
+          <ProductTable products={paginatedProducts} />
 
-          <PaginationBar resultCount={filteredProducts.length} />
+          <PaginationBar onChange={handlePaginationChange} resultCount={filteredProducts.length} />
         </Box>
       </AsyncWrapper>
     </PageWrapper>
