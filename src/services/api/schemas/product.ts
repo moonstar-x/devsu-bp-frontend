@@ -12,8 +12,12 @@ const ONE_YEAR_FROM_NOW_AS_DATE = new Date();
 ONE_YEAR_FROM_NOW_AS_DATE.setFullYear(ONE_YEAR_FROM_NOW_AS_DATE.getFullYear() + 1);
 const ONE_YEAR_FROM_NOW = dayjs(ONE_YEAR_FROM_NOW_AS_DATE).format('YYYY-MM-DD');
 
-export const createProductSchema = (client: Client) => {
+export const createProductSchema = (client: Client, editing: boolean = false) => {
   const validateIdExists: BaseJoi.ExternalValidationFunction<string, unknown> = async (value, helpers) => {
+    if (editing) {
+      return value;
+    }
+
     const exists = await client.products.checkProduct(value);
     if (exists) {
       return helpers.message({ external: 'This ID already exists.' });

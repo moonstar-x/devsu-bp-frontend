@@ -3,9 +3,14 @@ import { ProductMutationFormBody } from '$services/api/models/product.ts';
 import { Client } from '$services/api/client/Client.ts';
 
 const client = new Client('', '');
-const checkProductSpy = jest.spyOn(client.products, 'checkProduct').mockResolvedValue(false);
+const checkProductSpy = jest.spyOn(client.products, 'checkProduct');
 
 describe('Schemas: Product', () => {
+  beforeEach(() => {
+    checkProductSpy.mockResolvedValue(false);
+    checkProductSpy.mockReset();
+  });
+
   describe('createProductSchema', () => {
     const RELEASE_DATE = new Date();
     const REVISION_DATE = new Date();
@@ -127,6 +132,13 @@ describe('Schemas: Product', () => {
     it('should validate false against existing id.', async () => {
       checkProductSpy.mockResolvedValueOnce(true);
       await expect(Schema.validateAsync(validProduct)).rejects.toBeTruthy();
+    });
+
+    it('should validate true against existing id if editing.', async () => {
+      checkProductSpy.mockResolvedValueOnce(true);
+      const Schema = createProductSchema(client, true);
+      await expect(Schema.validateAsync(validProduct)).resolves.toBeTruthy();
+      expect(checkProductSpy).not.toHaveBeenCalled();
     });
 
     it('should validate true against valid objects.', async () => {
