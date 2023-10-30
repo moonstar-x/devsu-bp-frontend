@@ -108,7 +108,9 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error, editin
         </Button>
 
         <Button color="primary" type="submit" disabled={isSubmitting}>
-          Create
+          {
+            editing ? 'Edit' : 'Create'
+          }
         </Button>
       </FormActions>
     </Form>
