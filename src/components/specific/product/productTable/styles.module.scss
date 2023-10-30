@@ -3,9 +3,34 @@
 .menuIconWrapper {
   cursor: pointer;
   text-align: center;
+  position: relative;
 }
 
 .menuIcon {
   height: 30px;
   fill: $darkGrayishBlue900;
+}
+
+.menu {
+  z-index: 1000;
+  position: absolute;
+  padding: 0.25rem;
+  background-color: $white;
+  border: 1px solid $darkGrayishBlue900;
+  border-radius: 5px;
+  width: 100%;
+  left: 45%;
+}
+
+.item {
+  display: block;
+  padding: 5px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-decoration: none;
+  color: $black;
+
+  &:hover, &:focus {
+    background-color: $darkGrayishBlue100;
+  }
 }
