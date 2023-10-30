@@ -1,6 +1,7 @@
 import React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import NiceModal from '@ebay/nice-modal-react';
 import { Router } from '$components/router';
 import { ApiClientContextProvider } from '$components/context/ApiClientContext.tsx';
 
@@ -18,9 +19,11 @@ export const App = () => {
   return (
     <ApiClientContextProvider>
       <QueryClientProvider client={queryClient}>
-        <Router />
+        <NiceModal.Provider>
+          <Router />
 
-        <ReactQueryDevtools initialIsOpen={false} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </NiceModal.Provider>
       </QueryClientProvider>
     </ApiClientContextProvider>
   );

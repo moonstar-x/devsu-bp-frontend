@@ -12,6 +12,7 @@
     "build:prod": "tsc && vite build --mode production"
   },
   "dependencies": {
+    "@ebay/nice-modal-react": "^1.2.13",
     "@hookform/resolvers": "^3.3.2",
     "@joi/date": "^2.1.0",
     "@tanstack/react-query": "^5.0.5",
