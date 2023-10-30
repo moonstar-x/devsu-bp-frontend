@@ -6,7 +6,7 @@ import { useModal } from '@ebay/nice-modal-react';
 import { DeleteProductModal } from '$components/specific/product/deleteProductModal';
 import MenuIcon from '$assets/icons/ellipsis-vertical-solid.svg?react';
 import styles from './styles.module.scss';
-import { RouteDefs } from '$components/router/routes.ts';
+import { RouteDefs } from '$components/router';
 
 interface Props {
   id: string

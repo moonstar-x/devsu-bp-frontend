@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormInput } from '$components/common/form/formInput';
 import { LinkButton } from '$components/common/button';
-import { RouteDefs } from '$components/router/routes.ts';
+import { RouteDefs } from '$components/router';
 import styles from './styles.module.scss';
 
 interface Props {
