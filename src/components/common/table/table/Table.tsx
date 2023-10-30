@@ -8,8 +8,10 @@ interface Props extends React.DetailedHTMLProps<React.TableHTMLAttributes<HTMLTa
 
 export const Table: React.FC<Props> = ({ className, children, ...props }) => {
   return (
-    <table className={clsx(styles.table, className)} {...props}>
-      {children}
-    </table>
+    <div className={styles.tableWrapper}>
+      <table className={clsx(styles.table, className)} {...props}>
+        {children}
+      </table>
+    </div>
   );
 };

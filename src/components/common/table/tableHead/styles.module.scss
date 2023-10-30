@@ -8,9 +8,10 @@
     border-bottom: 2px solid $darkGrayishBlue300;
 
     th {
-      padding: 1rem 0;
+      padding: 1rem 2rem 1rem 0;
       @include font-family(Prelo W01 Semi Bold);
       text-align: start;
+      white-space: nowrap;
 
       &:first-child {
         text-align: center;
