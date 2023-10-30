@@ -1,13 +1,17 @@
-import { ProductSchema } from './product.ts';
+import { createProductSchema } from './product.ts';
 import { ProductMutationFormBody } from '$services/api/models/product.ts';
+import { Client } from '$services/api/client/Client.ts';
+
+const client = new Client('', '');
+const checkProductSpy = jest.spyOn(client.products, 'checkProduct').mockResolvedValue(false);
 
 describe('Schemas: Product', () => {
-  describe('ProductSchema', () => {
+  describe('createProductSchema', () => {
     const RELEASE_DATE = new Date();
     const REVISION_DATE = new Date();
     REVISION_DATE.setFullYear(REVISION_DATE.getFullYear() + 1);
 
-    const Schema = ProductSchema;
+    const Schema = createProductSchema(client);
     const validProduct: ProductMutationFormBody = {
       id: 'tj-crd',
       name: 'Tarjeta de Credito',
@@ -17,7 +21,7 @@ describe('Schemas: Product', () => {
       date_revision: REVISION_DATE.toISOString()
     };
 
-    it('should validate false against incomplete objects.', () => {
+    it('should validate false against incomplete objects.', async () => {
       const { id, name, description, logo, date_revision, date_release } = validProduct;
 
       const values = [
@@ -30,11 +34,11 @@ describe('Schemas: Product', () => {
       ];
 
       for (const value of values) {
-        expect(Schema.validate(value).error).toBeTruthy();
+        await expect(Schema.validateAsync(value)).rejects.toBeTruthy();
       }
     });
 
-    it('should validate false against bad id.', () => {
+    it('should validate false against bad id.', async () => {
       const values = [
         { ...validProduct, id: '' },
         { ...validProduct, id: null },
@@ -44,11 +48,11 @@ describe('Schemas: Product', () => {
       ];
 
       for (const value of values) {
-        expect(Schema.validate(value).error).toBeTruthy();
+        await expect(Schema.validateAsync(value)).rejects.toBeTruthy();
       }
     });
 
-    it('should validate false against bad name.', () => {
+    it('should validate false against bad name.', async () => {
       const values = [
         { ...validProduct, name: '' },
         { ...validProduct, name: null },
@@ -58,11 +62,11 @@ describe('Schemas: Product', () => {
       ];
 
       for (const value of values) {
-        expect(Schema.validate(value).error).toBeTruthy();
+        await expect(Schema.validateAsync(value)).rejects.toBeTruthy();
       }
     });
 
-    it('should validate false against bad description.', () => {
+    it('should validate false against bad description.', async () => {
       const values = [
         { ...validProduct, description: '' },
         { ...validProduct, description: null },
@@ -72,11 +76,11 @@ describe('Schemas: Product', () => {
       ];
 
       for (const value of values) {
-        expect(Schema.validate(value).error).toBeTruthy();
+        await expect(Schema.validateAsync(value)).rejects.toBeTruthy();
       }
     });
 
-    it('should validate false against bad logo.', () => {
+    it('should validate false against bad logo.', async () => {
       const values = [
         { ...validProduct, logo: '' },
         { ...validProduct, logo: null },
@@ -85,11 +89,11 @@ describe('Schemas: Product', () => {
       ];
 
       for (const value of values) {
-        expect(Schema.validate(value).error).toBeTruthy();
+        await expect(Schema.validateAsync(value)).rejects.toBeTruthy();
       }
     });
 
-    it('should validate false against bad date_release.', () => {
+    it('should validate false against bad date_release.', async () => {
       const now = new Date();
       const date = new Date(now.getFullYear() - 1, now.getMonth(), now.getDate() + 1);
 
@@ -101,11 +105,11 @@ describe('Schemas: Product', () => {
       ];
 
       for (const value of values) {
-        expect(Schema.validate(value).error).toBeTruthy();
+        await expect(Schema.validateAsync(value)).rejects.toBeTruthy();
       }
     });
 
-    it('should validate false against bad date_revision.', () => {
+    it('should validate false against bad date_revision.', async () => {
       const now = new Date();
 
       const values = [
@@ -116,12 +120,17 @@ describe('Schemas: Product', () => {
       ];
 
       for (const value of values) {
-        expect(Schema.validate(value).error).toBeTruthy();
+        await expect(Schema.validateAsync(value)).rejects.toBeTruthy();
       }
     });
 
-    it('should validate true against valid objects.', () => {
-      expect(Schema.validate(validProduct).error).toBeFalsy();
+    it('should validate false against existing id.', async () => {
+      checkProductSpy.mockResolvedValueOnce(true);
+      await expect(Schema.validateAsync(validProduct)).rejects.toBeTruthy();
+    });
+
+    it('should validate true against valid objects.', async () => {
+      await expect(Schema.validateAsync(validProduct)).resolves.toBeTruthy();
     });
   });
 });
