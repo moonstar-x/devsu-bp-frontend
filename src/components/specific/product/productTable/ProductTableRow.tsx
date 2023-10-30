@@ -34,7 +34,7 @@ export const ProductTableRow: React.FC<Props> = ({ id, logo, name, description, 
         {formattedRevisionDate}
       </td>
 
-      <ProductTableRowMenu id={id} />
+      <ProductTableRowMenu id={id} name={name} />
     </tr>
   );
 };

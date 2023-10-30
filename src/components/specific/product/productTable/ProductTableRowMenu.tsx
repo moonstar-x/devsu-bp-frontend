@@ -2,15 +2,18 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDetectClickOutside } from 'react-detect-click-outside';
+import { useModal } from '@ebay/nice-modal-react';
+import { DeleteProductModal } from '$components/specific/product/deleteProductModal';
 import MenuIcon from '$assets/icons/ellipsis-vertical-solid.svg?react';
 import styles from './styles.module.scss';
 import { RouteDefs } from '$components/router/routes.ts';
 
 interface Props {
   id: string
+  name: string
 }
 
-export const ProductTableRowMenu: React.FC<Props> = ({ id }) => {
+export const ProductTableRowMenu: React.FC<Props> = ({ id, name }) => {
   const [expand, setExpand] = useState<boolean>(false);
   const ref = useDetectClickOutside({
     onTriggered: () => {
@@ -19,6 +22,7 @@ export const ProductTableRowMenu: React.FC<Props> = ({ id }) => {
       }
     }
   });
+  const deleteModal = useModal(DeleteProductModal);
 
   const handleMenuClick = () => {
     setExpand(!expand);
@@ -31,7 +35,7 @@ export const ProductTableRowMenu: React.FC<Props> = ({ id }) => {
   };
 
   const handleDeleteClick = () => {
-    console.log('delete', id);
+    deleteModal.show({ name, id });
   };
 
   const handleDeleteKeyDown = (e: React.KeyboardEvent) => {
