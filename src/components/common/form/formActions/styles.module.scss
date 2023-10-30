@@ -1,5 +1,14 @@
+@use 'sass:map';
+@import '../../../../styles/variables';
+
 .actions {
   margin-top: 3rem;
   display: flex;
   justify-content: space-evenly;
+
+  @media (max-width: map.get($breakpoints, 'sm')) {
+    margin-top: 2rem;
+    flex-direction: column-reverse;
+    gap: 1rem;
+  }
 }
