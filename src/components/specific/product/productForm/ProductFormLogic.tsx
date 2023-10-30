@@ -9,13 +9,14 @@ import { ProductFormView } from './ProductFormView.tsx';
 interface Props {
   onSubmit: SubmitHandler<ProductMutationFormBody>
   initialData?: ProductMutationFormBody
+  editing?: boolean
 }
 
-export const ProductFormLogic: React.FC<Props> = ({ onSubmit, initialData }) => {
+export const ProductFormLogic: React.FC<Props> = ({ onSubmit, initialData, editing }) => {
   const client = useApiClient();
   const form = useForm({
     mode: 'all',
-    resolver: joiResolver(createProductSchema(client), { abortEarly: false }, { mode: 'async' }),
+    resolver: joiResolver(createProductSchema(client, editing), { abortEarly: false }, { mode: 'async' }),
     defaultValues: initialData
   });
   const [error, setError] = useState<Error | null>(null);
@@ -32,6 +33,6 @@ export const ProductFormLogic: React.FC<Props> = ({ onSubmit, initialData }) => 
   };
 
   return (
-    <ProductFormView form={form} onSubmit={handleSubmit} error={error} />
+    <ProductFormView form={form} onSubmit={handleSubmit} error={error} editing={editing} />
   );
 };

@@ -13,9 +13,10 @@ interface Props {
   form: UseFormReturn<ProductMutationFormBody>
   onSubmit: SubmitHandler<ProductMutationFormBody>
   error?: Error | null
+  editing?: boolean
 }
 
-export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
+export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error, editing }) => {
   const { handleSubmit, register, reset, setValue, trigger, formState: { errors, isSubmitting } } = form;
   const { date_release: insertedDateRelease } = useWatch(form);
 
@@ -50,6 +51,7 @@ export const ProductFormView: React.FC<Props> = ({ form, onSubmit, error }) => {
           type="text"
           label="ID"
           feedback={errors.id?.message}
+          disabled={editing}
           {...register('id')}
         />
 
