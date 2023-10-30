@@ -1,7 +1,14 @@
+@use 'sass:map';
+@import '../../../../styles/variables';
+
 .searchBar {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+
+  @media (max-width: map.get($breakpoints, 'sm')) {
+    padding: 0 1rem;
+  }
 }
