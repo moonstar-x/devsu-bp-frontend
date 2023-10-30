@@ -109,13 +109,13 @@ export class ProductService {
   // This service does not need caching.
   public async checkProduct(id: string): Promise<boolean> {
     try {
-      const response = await this.client.instance.get<string>('/products/verification', {
+      const response = await this.client.instance.get<boolean>('/products/verification', {
         params: {
           id
         }
       });
 
-      return response.data === 'true';
+      return response.data;
     } catch (error) {
       throw RequestError.fromRequest(error);
     }

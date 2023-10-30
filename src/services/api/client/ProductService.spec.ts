@@ -204,13 +204,13 @@ describe('Services: Api: ProductService', () => {
 
 
     it('should resolve true on exists.', async () => {
-      mockedAxiosClient.get.mockResolvedValueOnce({ data: 'true' });
+      mockedAxiosClient.get.mockResolvedValueOnce({ data: true });
 
       await expect(service.checkProduct(productId)).resolves.toBe(true);
     });
 
     it('should resolve false on not exists.', async () => {
-      mockedAxiosClient.get.mockResolvedValueOnce({ data: 'false' });
+      mockedAxiosClient.get.mockResolvedValueOnce({ data: false });
 
       await expect(service.checkProduct(productId)).resolves.toBe(false);
     });
