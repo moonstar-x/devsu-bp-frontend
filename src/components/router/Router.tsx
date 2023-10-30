@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { RouteDefs } from './routes.ts';
-import ProductSearchPage from '$components/pages/ProductSearchPage.tsx';
-import ProductCreatePage from '$components/pages/ProductCreatePage.tsx';
-import ProductEditPage from '$components/pages/ProductEditPage.tsx';
-import NotFoundPage from '$components/pages/NotFoundPage.tsx';
+
+const ProductSearchPage = React.lazy(() => import('$components/pages/ProductSearchPage.tsx'));
+const ProductCreatePage = React.lazy(() => import('$components/pages/ProductCreatePage.tsx'));
+const ProductEditPage = React.lazy(() => import('$components/pages/ProductEditPage.tsx'));
+const NotFoundPage = React.lazy(() => import('$components/pages/NotFoundPage.tsx'));
 
 export const Router = () => {
   return (

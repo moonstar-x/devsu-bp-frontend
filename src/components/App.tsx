@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import NiceModal from '@ebay/nice-modal-react';
 import { Router } from '$components/router';
+import { Loading } from '$components/common/loading';
 import { ApiClientContextProvider } from '$components/context/ApiClientContext.tsx';
 
 const queryClient = new QueryClient({
@@ -20,7 +21,9 @@ export const App = () => {
     <ApiClientContextProvider>
       <QueryClientProvider client={queryClient}>
         <NiceModal.Provider>
-          <Router />
+          <Suspense fallback={<Loading fullScreen />}>
+            <Router />
+          </Suspense>
 
           <ReactQueryDevtools initialIsOpen={false} />
         </NiceModal.Provider>
