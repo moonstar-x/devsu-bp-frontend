@@ -1,0 +1,15 @@
+@import '../../../../styles/variables';
+
+.actions {
+  border-top: 1px solid $darkGrayishBlue900;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  margin: 0;
+
+  display: flex;
+  gap: 1rem;
+
+  * {
+    flex: 1;
+  }
+}
