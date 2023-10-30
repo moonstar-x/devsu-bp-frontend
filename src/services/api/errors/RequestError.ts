@@ -17,6 +17,8 @@ export class RequestError extends Error {
     const axiosError = error as AxiosError;
     const message = axiosError.response?.data as string ?? axiosError.message ?? 'Unknown Error';
 
+    console.error(error);
+
     return new RequestError(axiosError, message);
   }
 }
