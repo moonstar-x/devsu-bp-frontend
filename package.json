@@ -3,13 +3,12 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite --mode development",
+    "dev": "vite",
     "lint": "eslint ./src --ext .tsx,.ts",
     "lint:fix": "eslint ./src --ext .tsx,.ts --fix",
     "test": "jest",
     "test:watch": "jest --watch",
-    "build:dev": "tsc && vite build --mode development",
-    "build:prod": "tsc && vite build --mode production"
+    "build": "tsc && vite build"
   },
   "dependencies": {
     "@ebay/nice-modal-react": "^1.2.13",
