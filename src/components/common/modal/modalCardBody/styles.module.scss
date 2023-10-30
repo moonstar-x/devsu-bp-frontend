@@ -1,0 +1,14 @@
+.body {
+  padding: 1.5rem;
+  flex: 1;
+
+  * {
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
